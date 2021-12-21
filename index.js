@@ -24,6 +24,8 @@ const mongoose = require("mongoose");   // importing mongoose library
 
 const dotenv = require('dotenv');   // importing library
 
+const userRoute = require("./routes/user");
+
 dotenv.config();   // we should write here configuration otherwise you can't use it
 
 // it's a promise so basically it can be successful or it can just fail how we are gonna control this i will come here and say .then which means if it's successful i'm gonna write my function it's gonna be just console.log and db connection successful so what about error if there is an error i will write here catch it's gonna catch this error so i can take this error i will just print this on my console console.log(error)
@@ -32,6 +34,14 @@ mongoose.connect(process.env.MONGO_URL)
 .catch((err) => {
     console.log(err);
 });
+
+// it's not a good idea to write here all our endpoints, so we will make another folder called routes
+// app.get("/api/test", ()=>{
+//     console.log("test is successfull");   //when you hit this endpoint test is successfull will be shown in terminal
+// })
+
+app.use(express.json());    //our application is not able to take any json object to prevent this we will go to index.js and before my routes we are gonna write app.use(express.json()); 
+app.use("/api/users", userRoute);
 
 // but to run this application we should listen any number so i will say app dot listen i'm gonna provide a port numbe i will say for example 5000 and here callback function after running application it's gonna show for example back-end server is running as you can see
 app.listen(process.env.PORT || 5000, ()=>{              // if process.env.PORT is available use it else use 5000
