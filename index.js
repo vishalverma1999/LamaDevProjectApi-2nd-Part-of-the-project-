@@ -19,9 +19,23 @@ const express = require('express');
 const app = express(); 
 
 
+// So how we can connect to mongo server let's write here our library let's import const mongoose it's going to be required mongoose
+const mongoose = require("mongoose");   // importing mongoose library
+
+const dotenv = require('dotenv');   // importing library
+
+dotenv.config();   // we should write here configuration otherwise you can't use it
+
+// it's a promise so basically it can be successful or it can just fail how we are gonna control this i will come here and say .then which means if it's successful i'm gonna write my function it's gonna be just console.log and db connection successful so what about error if there is an error i will write here catch it's gonna catch this error so i can take this error i will just print this on my console console.log(error)
+mongoose.connect(process.env.MONGO_URL)
+.then(()=> {console.log("DB Connection is Successfull!")})
+.catch((err) => {
+    console.log(err);
+});
+
 // but to run this application we should listen any number so i will say app dot listen i'm gonna provide a port numbe i will say for example 5000 and here callback function after running application it's gonna show for example back-end server is running as you can see
-app.listen(5000, ()=>{
-    console.log("backend server is running!")
+app.listen(process.env.PORT || 5000, ()=>{              // if process.env.PORT is available use it else use 5000
+    console.log("backend server is running")
 });
 
 
