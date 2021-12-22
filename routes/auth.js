@@ -50,8 +50,8 @@ router.post("/login", async (req, res) => {
             id: user._id,
             isAdmin: user.isAdmin
         },
-        process.env.JWT_SEC,   // jwt secret key
-        {expiresIn: "3d"}      // after 3days the token will expire and u need to login again
+            process.env.JWT_SEC,   // jwt secret key
+            { expiresIn: "3d" }      // after 3days the token will expire and u need to login again
         )
 
 
@@ -60,7 +60,7 @@ router.post("/login", async (req, res) => {
 
 
 
-        res.status(200).json({...others, accessToken});   // {others, accessToken} if it's written like this then accessToken will not be clubbed with the properties inside others, there will be 2 separate things 1st is others object and then next accessToken, BUT if we use spread operator like ...others which means to take out all the things from others object and hence fields inside others object will gonna be clubbed with the accessToken
+        res.status(200).json({ ...others, accessToken });   // {others, accessToken} if it's written like this then accessToken will not be clubbed with the properties inside others, there will be 2 separate things 1st is others object and then next accessToken, BUT if we use spread operator like ...others which means to take out all the things from others object and hence fields inside others object will gonna be clubbed with the accessToken
     } catch (err) {
         res.status(500).json(err);
     }
