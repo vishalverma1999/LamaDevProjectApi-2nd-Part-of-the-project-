@@ -27,10 +27,41 @@ router.post("/register", async (req,res)=>{
     }
 
 })
+    //-----------------------------------------------------------------------------------------------------
+
+    // Login endpoint, post request
+    router.post("/login", async (req,res)=>{
+
+        try{
+        const user = await User.findOne({username: req.body.username});  // i'm going to find my user by using User model and i'm gonna use findOne() method here because there is only one user with same username so i'm gonna write here my condition it's gonna be username request and body and username so when you find Vishal inside db just return to me of course if the password is correct
+        !user && res.status(401).json("Wrong Credentials");   // if username not found
+
+        // Decrypting hashed Password, below shown 2 line are the standard steps to decrypt, see here https://www.npmjs.com/package/crypto-js > AES ENCRYPTION PLAINTEXT
+        const hashedPassword = CryptoJS.AES.decrypt(user.password, process.env.SECRET_PASSWORD);   // code will be returned therefore it is needed to convert it to string
+        const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);  //by the way if you are using any other character you can write here any specific version for example CryptoJS.enc.Utf8
+
+        originalPassword !== req.body.password &&  res.status(401).json("Wrong Credentials");  // if entered password doesn't matches with the password in database
+
+
+
+
+        // by the way after login process in our react application we are gonna save these informations, but there is a problem here that we can see this password, even if no one knows our secret key here for our crypto.js you should never ever reveal your password anywhere, to prevent i can use spread operator and destructuring and send my user every information but not password
+        const {password, ...others} = user._doc;  // mongodb stores our documents inside "_doc" but we are passing user directly, i know it's a little bit weird but you should write here user._doc
+
+
+
+        res.status(200).json(others);   // if both username and password entered correctly
+        } catch(err){
+            res.status(500).json(err);
+            }
+        })
 
 module.exports = router;
 
 
 
 
+/*
+ */
+  
  
