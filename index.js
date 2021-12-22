@@ -24,7 +24,8 @@ const mongoose = require("mongoose");   // importing mongoose library
 
 const dotenv = require('dotenv');   // importing library
 
-const userRoute = require("./routes/user");
+const userRoute = require("./routes/user");  // importing user route  
+const authRoute = require("./routes/auth");  // importing auth route 
 
 dotenv.config();   // we should write here configuration otherwise you can't use it
 
@@ -42,6 +43,7 @@ mongoose.connect(process.env.MONGO_URL)
 
 app.use(express.json());    //our application is not able to take any json object to prevent this we will go to index.js and before my routes we are gonna write app.use(express.json()); 
 app.use("/api/users", userRoute);
+app.use("/api/auth", authRoute);
 
 // but to run this application we should listen any number so i will say app dot listen i'm gonna provide a port numbe i will say for example 5000 and here callback function after running application it's gonna show for example back-end server is running as you can see
 app.listen(process.env.PORT || 5000, ()=>{              // if process.env.PORT is available use it else use 5000
