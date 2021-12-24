@@ -29,6 +29,8 @@ const authRoute = require("./routes/auth");  // importing auth route
 const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
+const stripeRoute = require("./routes/stripe");
+
 
 
 dotenv.config();   // we should write here configuration otherwise you can't use it
@@ -51,6 +53,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
+app.use("/api/checkout", stripeRoute);
 
 
 // but to run this application we should listen any number so i will say app dot listen i'm gonna provide a port numbe i will say for example 5000 and here callback function after running application it's gonna show for example back-end server is running as you can see
