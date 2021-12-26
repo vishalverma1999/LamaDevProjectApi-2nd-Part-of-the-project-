@@ -30,7 +30,7 @@ const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/stripe");
-
+const cors = require('cors');
 
 
 dotenv.config();   // we should write here configuration otherwise you can't use it
@@ -47,6 +47,7 @@ mongoose.connect(process.env.MONGO_URL)
 //     console.log("test is successfull");   //when you hit this endpoint test is successfull will be shown in terminal
 // })
 
+app.use(cors());    // Using cors
 app.use(express.json());    //our application is not able to take any json object to prevent this we will go to index.js and before my routes we are gonna write app.use(express.json()); 
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
